@@ -57,8 +57,18 @@ services:
         reservations:
           memory: 64M
 
+  gr-ngrok:
+    image: wernight/ngrok
+    networks:
+      - net
+    command: >
+      ngrok http http://grafana-view:3000 -authtoken=${NGROK_TOKEN_GRAFANA}
+    ports:
+      - "5500:4040"
+
   grafana:
     image: stefanprodan/swarmprom-grafana:5.3.4
+    hostname: grafana-view
     networks:
       - net
     environment:
